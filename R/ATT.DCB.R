@@ -8,7 +8,7 @@
 #'
 #' @examples ATT.DCB(Y,T,X)
 #'
-#' @export ATE.DCB
+#' @export ATT.DCB
 
 
 ATT.DCB <- function(Y,T,X,gp=TRUE,lambda=10,delta=0.001,mu=0.001,upsilon=0.001,thold=1e-4,max_iter=100000){
