@@ -9,5 +9,5 @@ License: GPL-2
 Encoding: UTF-8
 LazyData: true
 Imports:
-   MASS, rockchalk, matrixcalc, glmnet, nloptr, rHanso, rje
+   MASS, rockchalk, matrixcalc, glmnet, nloptr, rHanso, rje, gvlma
 RoxygenNote: 6.1.1

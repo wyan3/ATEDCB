@@ -34,7 +34,6 @@ The function provides the estimation of ATE given the outcome Y, binary treatmen
 Kuang, K., Cui, P., Li, B., Jiang, M., & Yang, S. (2017). Estimating treatment effect in the wild via differentiated confounder balancing. In Proceedings of the 23rd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (pp. 265-274).
 }
 \author{
-Wangcheng Yan, Wenjun Zhou
 }
 \examples{
 n <- 2000
