@@ -22,7 +22,7 @@ ATT.DCB <- function(Y,T,X,gp=TRUE,lambda=10,delta=0.001,mu=0.001,upsilon=0.001,t
   gvmodel <- gvlma::gvlma(mod)
   if(gvmodel$GlobalTest$GlobalStat4$pvalue[1,1]<=0.05){
     for(i in 1:ncol(X)){
-      for(j in 1:ncol(X)){
+      for(j in i:ncol(X)){
         M <- cbind(M,X[,i]*X[,j])
       }
     }
