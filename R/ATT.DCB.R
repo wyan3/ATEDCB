@@ -11,27 +11,7 @@
 #' @export ATT.DCB
 
 
-ATT.DCB <- function(Y,T,X,gp=TRUE,lambda=10,delta=0.001,mu=0.001,upsilon=0.001,thold=1e-4,max_iter=100000){
-  M <- X
-  
-  mydata <- as.data.frame(cbind(Y,T,X))
-  names(mydata)[1] <- "Y"
-  names(mydata)[3:ncol(mydata)] <- paste0("X",1:ncol(X))
-  fmla <- as.formula(paste("Y ~ ", paste(setdiff(names(mydata),c("Y","T")), collapse= " + ")))
-  mod <- lm(formula=fmla, data=mydata[mydata$T==0,])
-  gvmodel <- gvlma::gvlma(mod)
-  if(gvmodel$GlobalTest$GlobalStat4$pvalue[1,1]<=0.05){
-    for(i in 1:ncol(X)){
-      for(j in i:ncol(X)){
-        M <- cbind(M,X[,i]*X[,j])
-      }
-    }
-    for(j in 1:ncol(M)){
-      ms <- mean(M[,j])
-      sd <- sqrt(var(M[,j]))
-      M[,j] <- (M[,j] - ms)/sd
-    }
-  }
+ATT.DCB <- function(Y,T,M,gp=TRUE,lambda=10,delta=0.001,mu=0.001,upsilon=0.001,thold=1e-4,max_iter=100000){
   
   n_c <- sum(T==0)
   p <- ncol(M)

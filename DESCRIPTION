@@ -2,12 +2,12 @@ Package: ATEDCB
 Type: Package
 Title: ATE Estimation Using Differentiated Confounder Balancing (DCB)
 Version: 0.1.0
-Author: Wangcheng Yan <wyan3@vols.utk.edu> and Wenjun Zhou <wzhou4@utk.edu>
-Maintainer: Wangcheng Yan <wyan3@vols.utk.edu>
+Author: 
+Maintainer: 
 Description: Estimation of the average treatment effect (ATE) and ATE on the treated (ATT) using a differentiated confounder balancing (DCB) approach.
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
 Imports:
-   MASS, rockchalk, matrixcalc, glmnet, nloptr, rHanso, rje, gvlma
+   MASS, rockchalk, matrixcalc, glmnet, nloptr, rje, gvlma
 RoxygenNote: 6.1.1

@@ -1,8 +1,8 @@
-\name{ATT.DCB_V2}
-\alias{ATT.DCB_V2}
+\name{ATE.DCB}
+\alias{ATE.DCB}
 \title{ATE Estimation using Differentiated Confounder Balancing (DCB)}
 \usage{
-ATE.DCB_V2(Y,T,X)
+ATE.DCB(Y,T,X)
 }
 \description{
 The function provides the estimation of ATE given the outcome Y, binary treatment T, and covariates X.
@@ -36,21 +36,16 @@ Kuang, K., Cui, P., Li, B., Jiang, M., & Yang, S. (2017). Estimating treatment e
 \author{
 }
 \examples{
-n <- 2000
-p <- 50
-q <- p*(p-1)/2
-tau <- 5
-nclust <- 10
-beta <- 2 / (1:p) / sqrt(sum(1/(1:p)^2))
-clust.ptreat <- rep(c(0.1, 0.9), nclust/2)
-cluster.center <- 0.5 * matrix(rnorm(nclust * p), nclust, p)
-cluster <- sample.int(nclust, n, replace = TRUE)
-X <- cluster.center[cluster,] + matrix(rnorm(n * p), n, p)
-T <- rbinom(n, 1, clust.ptreat[cluster])
-Y <- 2 + X \%*\% beta + rnorm(n, 0, 1) + tau * T
+set.seed(25)
+n <- 200
+Z <- matrix(rnorm(4*n),ncol=4,nrow=n)
+prop <- 1 / (1 + exp(Z[,1] - 0.5 * Z[,2] + 0.25*Z[,3] + 0.1 * Z[,4]))
+treat <- rbinom(n, 1, prop)
+Y <- 200 + 10*treat+ (1.5*treat-0.5)*(27.4*Z[,1] + 13.7*Z[,2] + 13.7*Z[,3] + 13.7*Z[,4]) + rnorm(n)
+X <- cbind(exp(Z[,1])/2,Z[,2]/(1+exp(Z[,1])), (Z[,1]*Z[,3]/25+0.6)^3,(Z[,2]+Z[,4]+20)^2)
 
-fit1 <- ATE.DCB_V2(Y,T,X)
+fit1 <- ATE.DCB(Y,T,X)
 fit1$ATE
-fit2 <- ATE.DCB_V2(Y,T,X,ATT=TRUE)
+fit2 <- ATE.DCB(Y,T,X,ATT=TRUE)
 fit2$ATT
 }
