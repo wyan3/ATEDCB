@@ -25,6 +25,8 @@ The function provides the estimation of ATE given the outcome Y, binary treatmen
 \value{
 %  ~Describe the value returned
 %  If it is a LIST, use
+\item{beta}{Covariate coefficient while estimating ATT weights}
+\item{beta1}{Covariate coefficient while estimating ATC weights}
 \item{wt}{Estimated weight for each unit}
 \item{E[Y(1)]}{Expectation of outcome if treated}
 \item{E[Y(0)]}{Expectation of outcome if untreated}
