@@ -21,6 +21,11 @@ ATE.DCB <- function(Y,T,X,ATT=FALSE,lambda=10,delta=0.001,mu=0.001,upsilon=0.001
         X[,j] <- bestNormalize::yeojohnson(X[,j])$x.t
       }
     }
+    if(shapiro.test(X[,j])$p.value>=0.05){
+      m1 <- mean(X[,j])
+      sd1 <- sqrt(var(X[,j]))
+      X[,j] <- (X[,j]-m1)/sd1
+    }
   }
   
   mydata <- as.data.frame(cbind(Y,T,X))
