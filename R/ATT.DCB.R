@@ -78,6 +78,20 @@ ATT.DCB <- function(Y,T,M,gp=TRUE,lambda=10,delta=0.001,mu=0.001,upsilon=0.001,t
   fit <- rje::armijo(fun=fr, x=omega, dx = -grr(omega))
   eta <- fit$adj
 
+  ####cross validation
+  diff <- as.vector(M_t_bar - t(M_c) %*% W)
+  Y_prime <- sqrt(lambda*(1+W))*Y_c
+  M_prime <- as.vector(sqrt(lambda*(1+W)))*M_c
+  mydata <- as.data.frame(cbind(c(Y_prime,0),rbind(M_prime,diff)))
+  names(mydata)[1] <- "Y_prime_0"
+  model <- caret::train(
+    Y_prime_0 ~ ., data = mydata, method = "glmnet",
+    trControl = trainControl("cv", number = 10),
+    tuneLength = 10
+  )
+  alpha1 <- model$bestTune[[1]]
+  lambda1 <- model$bestTune[[2]]
+  
 
   for(ind in 1:max_iter){
     ####################################################################
@@ -88,8 +102,11 @@ ATT.DCB <- function(Y,T,M,gp=TRUE,lambda=10,delta=0.001,mu=0.001,upsilon=0.001,t
     M_prime <- as.vector(sqrt(lambda*(1+W)))*M_c
 
     ####Elastic net####
+    #fit <- glmnet::glmnet(x=rbind(M_prime,diff), y=c(Y_prime,0),
+    #              family="gaussian", alpha=1/(1+2*mu/upsilon), lambda = 2*mu+upsilon)
     fit <- glmnet::glmnet(x=rbind(M_prime,diff), y=c(Y_prime,0),
-                  family="gaussian", alpha=1/(1+2*mu/upsilon), lambda = 2*mu+upsilon)
+                  family="gaussian", alpha=alpha1, lambda = lambda1)
+    
     beta <- as.vector(fit$beta)
 
     values <- c(values,obj_func(W,beta))
@@ -141,7 +158,7 @@ ATT.DCB <- function(Y,T,M,gp=TRUE,lambda=10,delta=0.001,mu=0.001,upsilon=0.001,t
 
   #plot(J[2:length(J)])
 
-  out <- list("beta"=beta, "weight"=W, "ATT"=mean(Y[T==1]) - sum(W*Y[T==0]), "update"=values)
+  out <- list("alpha"=alpha1,"lambda"=lambda1,"beta"=beta, "weight"=W, "ATT"=mean(Y[T==1]) - sum(W*Y[T==0]), "update"=values)
   return(out)
 }
 

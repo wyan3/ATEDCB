@@ -65,7 +65,9 @@ ATE.DCB <- function(Y,T,X,ATT=FALSE,lambda=10,delta=0.001,mu=0.001,upsilon=0.001
     wt <- rep(NA,length(T))
     wt[T==1] <- rep(1/sum(T==1),sum(T==1))
     wt[T==0] <- fit$weight
-    out <- list("beta"=fit$beta, "wt"=wt, "E[Y(1)]"=mean(Y[T==1]), "E[Y(0)]"=sum(fit$weight*Y[T==0]), "ATT"=fit$ATT)
+    out <- list("alpha"=fit$alpha, "lambda"=fit$lambda,"beta"=fit$beta, 
+                "wt"=wt, "E[Y(1)]"=mean(Y[T==1]), "E[Y(0)]"=sum(fit$weight*Y[T==0]), 
+                "ATT"=fit$ATT)
   }
   else{
     fit1 <- ATT.DCB(Y,T,M,gp=ATT,lambda=lambda,delta=delta,mu=mu,upsilon=upsilon,thold=thold,max_iter=max_iter)
@@ -73,7 +75,9 @@ ATE.DCB <- function(Y,T,X,ATT=FALSE,lambda=10,delta=0.001,mu=0.001,upsilon=0.001
     wt <- rep(NA,length(T))
     wt[T==0] <- fit1$weight
     wt[T==1] <- fit2$weight
-    out <- list("beta"=fit1$beta, "beta1"=fit2$beta, "wt"=wt, "E[Y(1)]"=sum(wt[T==1]*Y[T==1]), "E[Y(0)]"=sum(wt[T==0]*Y[T==0]),
+    out <- list("alpha"=fit1$alpha, "lambda"=fit1$lambda, "beta"=fit1$beta, 
+                "beta1"=fit2$beta, "wt"=wt, "E[Y(1)]"=sum(wt[T==1]*Y[T==1]), 
+                "E[Y(0)]"=sum(wt[T==0]*Y[T==0]),
                 "ATE"=sum(wt[T==1]*Y[T==1])-sum(wt[T==0]*Y[T==0]))
   }
   return(out)
