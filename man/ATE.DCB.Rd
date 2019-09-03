@@ -14,6 +14,7 @@ The function provides the estimation of ATE given the outcome Y, binary treatmen
     \item{\code{T}}{Binary treatment status indicator: 1=treatment; 0=control.}
     \item{\code{X}}{Covariate matrix}
     \item{\code{ATT}}{Whether estimating ATT. Default is FALSE. If ATT=TRUE, it is equivalent to function ``ATT.DCB''}
+    \item{\code{aug}}{Whether augmentation. Default is FALSE. If aug=TRUE, it may include second-order moments.}
     \item{\code{lambda}}{Penalty on the loss of outcome regression on covariates in the control group. Default is 10.}
     \item{\code{delta}}{Penalty on the L2-norm of weight for each unit. Default is 0.001}
     \item{\code{mu}}{Penalty on the L2-norm of coefficient for each covariate. Default is 0.001}
