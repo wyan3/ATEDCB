@@ -86,7 +86,7 @@ ATT.DCB <- function(Y,T,M,gp=TRUE,lambda=10,delta=0.001,mu=0.001,upsilon=0.001,t
   names(mydata)[1] <- "Y_prime_0"
   model <- caret::train(
     Y_prime_0 ~ ., data = mydata, method = "glmnet",
-    trControl = trainControl("cv", number = 10),
+    trControl = caret::trainControl("cv", number = 10),
     tuneLength = 10
   )
   alpha1 <- model$bestTune[[1]]
